@@ -94,7 +94,7 @@ class UpdateCert:
         p = Popen(certbot_command)
         p.communicate()
         if p.returncode != 0:
-            logger.error("Error during certbot command execution")
+            logger.exception("Error during certbot command execution")
             raise RuntimeError()
 
     def _create_pfx(self, domain, pfx_path, pfx_password):
@@ -115,7 +115,8 @@ class UpdateCert:
         p = Popen(openssl_command)
         p.communicate()
         if p.returncode != 0:
-            raise RuntimeError("Error during openssl command")
+            logger.exception("Error during openssl command execution")
+            raise RuntimeError()
 
 
 if __name__ == "__main__":
