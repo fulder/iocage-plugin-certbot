@@ -1,2 +1,3 @@
 certbot==1.12.0
 certbot-dns-cloudflare==1.12.0
+PyYAML==5.4.1
