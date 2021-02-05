@@ -74,6 +74,9 @@ class UpdateCert:
             ]
             self._run_certbot_command(certbot_command)
 
+            if domain["pfx_location"]:
+                self._create_pfx(domain["domain_name"], domain["pfx_location"], domain.get("pfx_password", ""))
+
             os.remove(cloudflare_ini_path)
 
     def _run_certbot_command(self, certbot_command):
@@ -88,11 +91,31 @@ class UpdateCert:
         ]
         logger.info(f"Running certbot command: {certbot_command}")
 
-        p = Popen(certbot_command)
-        p.communicate()
-        if p.returncode != 0:
-            logger.error("Error during certbot command execution")
-            raise RuntimeError()
+        # p = Popen(certbot_command)
+        # p.communicate()
+        # if p.returncode != 0:
+        #     logger.error("Error during certbot command execution")
+        #     raise RuntimeError()
+
+    def _create_pfx(self, domain, pfx_path, pfx_password):
+        domain_folder = os.path.join(CERTBOT_DIR, "config", "live", domain)
+        privkey_path = os.path.join(domain_folder, "privkey.pem")
+        fullchain_path = os.path.join(domain_folder, "fullchain.pem")
+
+        openssl_command = [
+            "openssl", "pkcs12",
+            "-export",
+            "--out", pfx_path,
+            "-inkey", privkey_path,
+            "-in", fullchain_path,
+            "-password", f"pass:{pfx_password}"
+        ]
+        logger.info(f"Running OpenSSL command: {openssl_command}")
+
+        # p = Popen(openssl_command)
+        # p.communicate()
+        # if p.returncode != 0:
+        #     raise RuntimeError("Error during openssl command")
 
 
 if __name__ == "__main__":
