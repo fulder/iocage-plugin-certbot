@@ -5,4 +5,5 @@ cloudflare:
   domains:
     - domain_name: example.com
       api_key: asdnlkasnd12312
+      pfx_password: ""  # Optional PFX password
       pfx_location: ""  # Optional, will convert certbot fullchain certificate into PFX and place it in this directory
