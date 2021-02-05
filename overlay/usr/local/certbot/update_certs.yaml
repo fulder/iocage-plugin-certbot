@@ -1,0 +1,9 @@
+log_level: "DEBUG"
+
+log_location: "/var/logs/update_certs.log"
+
+
+cloudflare:
+  cloudflare_ini_location: "/usr/local/certbot/.secrets/cloudflare.ini"
+
+
