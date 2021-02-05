@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set_cron() {
-    echo "${cron_expression}" /usr/local/certbot/update_certs.sh > new_cron
+    echo "${cron_expression}" python /usr/local/certbot/update_certs.py > new_cron
 
     if crontab new_cron
     then
