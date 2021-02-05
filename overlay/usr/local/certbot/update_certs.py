@@ -18,6 +18,8 @@ class UpdateCert:
         self._load_config()
         self._setup_logger()
 
+
+
     def _load_config(self):
         with open(CONFIG_LOCATION, "r") as f:
             self.cfg = yaml.safe_load(f)
