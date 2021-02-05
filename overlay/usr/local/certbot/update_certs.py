@@ -1,11 +1,13 @@
 import logging
 import os
+from subprocess import Popen
 
 import yaml
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 CONFIG_LOCATION = os.path.join(CURRENT_DIR, "update_certs.yaml")
 LOG_LOCATION = os.path.join(CURRENT_DIR, "update_certs.log")
+CERTBOT_DIR = os.path.join(CURRENT_DIR, "certbot")
 
 logger = logging.getLogger("update_certs")
 
@@ -70,9 +72,27 @@ class UpdateCert:
                 "--dns-cloudflare-credentials", cloudflare_ini_path,
                 "-d", domain["domain_name"]
             ]
-            logger.info(f"Running certbot command: {certbot_command}")
+            self._run_certbot_command(certbot_command)
 
             os.remove(cloudflare_ini_path)
+
+    def _run_certbot_command(self, certbot_command):
+        config_dir = os.path.join(CERTBOT_DIR, "config")
+        work_dir = os.path.join(CERTBOT_DIR, "work")
+        logs_dir = os.path.join(CERTBOT_DIR, "logs")
+
+        certbot_command += [
+            "--config-dir", config_dir,
+            "--work-dir", work_dir,
+            "--logs-dir", logs_dir,
+        ]
+        logger.info(f"Running certbot command: {certbot_command}")
+
+        p = Popen(certbot_command)
+        p.communicate()
+        if p.returncode != 0:
+            logger.error("Error during certbot command execution")
+            raise RuntimeError()
 
 
 if __name__ == "__main__":
