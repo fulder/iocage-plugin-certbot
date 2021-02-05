@@ -1,18 +1,6 @@
 #!/bin/sh
 
-
-get_unifi_poller_status() {
-    api_key=$(sed 's/dns_cloudflare_api_token = //g' /usr/local/certbot/.secrets/cloudflare.ini)
-    echo "cloudflare_api_token=${api_key}"
-}
-
-if [ "$1" == "cloudflare_api_token" ]
-then
-    get_cloudflare_api_token()
-elif [ "$1" == "cloudflare_domains" ]
-then
-    sysrc cloudflare_domains
-elif [ "$1" = "cron" ]
+if [ "$1" = "cron" ]
 then
     sysrc certbot_cron
 else
