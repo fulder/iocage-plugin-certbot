@@ -24,14 +24,20 @@ class UpdateCert:
 
     def _setup_logger(self):
         log_level = self.cfg["log_level"]
-
-        logger.setLevel(log_level)
-        handler = logging.StreamHandler()
+        log_location = self.cfg["log_location"]
 
         formatter = logging.Formatter('%(asctime)s %(levelname)s %(name)s %(message)s')
-        handler.setFormatter(formatter)
-        handler.setLevel(log_level)
-        logger.addHandler(handler)
+
+        logger.setLevel(log_level)
+        sh = logging.StreamHandler()
+        sh.setFormatter(formatter)
+        sh.setLevel(log_level)
+        logger.addHandler(sh)
+
+        fh = logging.FileHandler(log_location)
+        fh.setFormatter(formatter)
+        fh.setLevel(log_level)
+        logger.addHandler(fh)
 
 
 if __name__ == "__main__":
