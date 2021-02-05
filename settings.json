@@ -2,11 +2,18 @@
   "serviceget": "/usr/local/bin/certbotget",
   "serviceset": "/usr/local/bin/certbotset",
   "options": {
-    "auto_update": {
-      "type": "bool",
-      "name": "Enable plex auto update",
-      "description": "Enable or disable automatic plex media server updates to newest version",
-      "default": true,
+    "cloudflare_api_token": {
+      "type": "string",
+      "name": "Cloudflare api token",
+      "description": "Cloudflare token to use for dns challenge",
+      "default": "",
+      "requirerestart": false
+    },
+    "cloudflare_domains": {
+      "type": "string",
+      "name": "Cloudflare domains",
+      "description": "One or multiple domains (comma separated) to update using Cloudflare dns challenge",
+      "default": "",
       "requirerestart": false
     },
     "cron": {

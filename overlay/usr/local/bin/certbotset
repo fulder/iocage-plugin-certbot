@@ -1,15 +1,19 @@
 #!/bin/sh
 
-set_cloudflare() {
+set_cloudflare_api_token() {
     echo "dns_cloudflare_api_token = ${cloudflare_api_key}" > /usr/local/certbot/.secrets/cloudflare.ini
 }
 
+set_cloudflare_domains() {
+    sysrc -f /etc/rc.conf cloudflare_domains="${cloudflare_domains}"
+}
+
 set_cron() {
-    echo "$cron_expression" /usr/local/certbot/update_certs.sh > new_cron
+    echo "${cron_expression}" /usr/local/certbot/update_certs.sh > new_cron
 
     if crontab new_cron
     then
-      sysrc -f /etc/rc.conf certbot_cron="$cron_expression"
+      sysrc -f /etc/rc.conf certbot_cron="${cron_expression}"
       rm new_cron
     else
       echo "Invalid cron expression"
@@ -20,11 +24,15 @@ set_cron() {
 if [ "$1" == "cloudflare_api_token" ]
 then
     cloudflare_api_key="$2"
-    set_cloudflare
+    set_cloudflare_api_token()
+elif [ "$1" == "cloudflare_domains" ]
+then
+    cloudflare_domains="$2"
+    set_cloudflare_domains()
 elif [ "$1" = "cron" ]
 then
     cron_expression="$2"
-    set_cron
+    set_cron()
 else
     echo "Unknown option"
 fi
