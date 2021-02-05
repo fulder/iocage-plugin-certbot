@@ -91,11 +91,11 @@ class UpdateCert:
         ]
         logger.info(f"Running certbot command: {certbot_command}")
 
-        # p = Popen(certbot_command)
-        # p.communicate()
-        # if p.returncode != 0:
-        #     logger.error("Error during certbot command execution")
-        #     raise RuntimeError()
+        p = Popen(certbot_command)
+        p.communicate()
+        if p.returncode != 0:
+            logger.error("Error during certbot command execution")
+            raise RuntimeError()
 
     def _create_pfx(self, domain, pfx_path, pfx_password):
         domain_folder = os.path.join(CERTBOT_DIR, "config", "live", domain)
@@ -112,10 +112,10 @@ class UpdateCert:
         ]
         logger.info(f"Running OpenSSL command: {openssl_command}")
 
-        # p = Popen(openssl_command)
-        # p.communicate()
-        # if p.returncode != 0:
-        #     raise RuntimeError("Error during openssl command")
+        p = Popen(openssl_command)
+        p.communicate()
+        if p.returncode != 0:
+            raise RuntimeError("Error during openssl command")
 
 
 if __name__ == "__main__":
