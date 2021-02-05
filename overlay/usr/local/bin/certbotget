@@ -1,0 +1,14 @@
+#!/bin/sh
+
+
+get_unifi_poller_status() {
+    api_key=$(sed 's/dns_cloudflare_api_token = //g' cloudflare.ini)
+    echo "certbot_cloudflare_api_token=${api_key}"
+}
+
+if [ "$1" == "certbot_cloudflare_api_token" ]
+then
+    get_cloudflare_api_token()
+else
+    echo "Unknown option"
+fi

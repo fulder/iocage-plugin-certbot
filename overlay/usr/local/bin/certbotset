@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cloudflare() {
+    echo "dns_cloudflare_api_token = ${cloudflare_api_key}" > /usr/local/certbot/.secrets/cloudflare.ini
+}
+
+if [ "$1" == "certbot_cloudflare_api_token" ]
+then
+    cloudflare_api_key="$2"
+    cloudflare
+else
+    echo "Unknown option"
+fi
