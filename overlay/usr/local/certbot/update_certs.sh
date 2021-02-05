@@ -1,7 +1,7 @@
 #!/bin/sh
 
-log = "/var/logs/iocage_certbot.log"
-cloudflare_ini = "/usr/local/certbot/.secrets/cloudflare.ini"
+log="/var/logs/iocage_certbot.log"
+cloudflare_ini="/usr/local/certbot/.secrets/cloudflare.ini"
 
 cloudflare_api_key=$(sed 's/dns_cloudflare_api_token = //g' ${cloudflare_ini})
 
