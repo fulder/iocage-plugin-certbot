@@ -1,9 +1,8 @@
 log_level: "DEBUG"
-log_location: "/var/logs/update_certs.log"
 
 cloudflare:
 
   domains:
-#    - domain_name: example.com
-#      api_key: 123123123
-#      pfx_location: ""  # Optional, will convert certbot fullchain certificate into PFX and place it in this directory
+    - domain_name: example.com
+      api_key: asdnlkasnd12312
+      pfx_location: ""  # Optional, will convert certbot fullchain certificate into PFX and place it in this directory
