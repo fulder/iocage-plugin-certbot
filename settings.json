@@ -1,0 +1,20 @@
+{
+  "serviceget": "/usr/local/bin/certbotget",
+  "serviceset": "/usr/local/bin/certbotset",
+  "options": {
+    "auto_update": {
+      "type": "bool",
+      "name": "Enable plex auto update",
+      "description": "Enable or disable automatic plex media server updates to newest version",
+      "default": true,
+      "requirerestart": false
+    },
+    "cron": {
+      "type": "string",
+      "name": "Certs update schedule",
+      "description": "Cron expression for when to run the update certs script. Default: every second month",
+      "default": "0 0 * */2 *",
+      "requirerestart": false
+    }
+  }
+}
