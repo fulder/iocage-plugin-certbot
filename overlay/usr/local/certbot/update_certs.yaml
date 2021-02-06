@@ -1,4 +1,5 @@
 log_level: "DEBUG"
+email: ""  # required email for certbot command and certificate notifications
 
 cloudflare:
 

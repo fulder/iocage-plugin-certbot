@@ -84,18 +84,24 @@ class UpdateCert:
         work_dir = os.path.join(CERTBOT_DIR, "work")
         logs_dir = os.path.join(CERTBOT_DIR, "logs")
 
+        if self.cfg["email"] is None:
+            logger.error("Required email config parameter not set")
+            raise RuntimeError()
+
         certbot_command += [
             "--config-dir", config_dir,
             "--work-dir", work_dir,
             "--logs-dir", logs_dir,
             "--non-interactive",
+            "--agree-tos",
+            "--email", self.cfg["email"]
         ]
         logger.info(f"Running certbot command: {certbot_command}")
 
         p = Popen(certbot_command)
         p.communicate()
         if p.returncode != 0:
-            logger.exception("Error during certbot command execution")
+            logger.error("Error during certbot command execution")
             raise RuntimeError()
 
     def _create_pfx(self, domain, pfx_path, pfx_password):
@@ -116,7 +122,7 @@ class UpdateCert:
         p = Popen(openssl_command)
         p.communicate()
         if p.returncode != 0:
-            logger.exception("Error during openssl command execution")
+            logger.error("Error during openssl command execution")
             raise RuntimeError()
 
 
