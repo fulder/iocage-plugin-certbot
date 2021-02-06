@@ -1,8 +1,0 @@
-#!/bin/sh
-
-if [ "$1" = "cron" ]
-then
-    sysrc certbot_cron
-else
-    echo "Unknown option"
-fi
