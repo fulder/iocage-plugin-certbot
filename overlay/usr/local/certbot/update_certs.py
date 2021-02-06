@@ -88,6 +88,7 @@ class UpdateCert:
             "--config-dir", config_dir,
             "--work-dir", work_dir,
             "--logs-dir", logs_dir,
+            "--non-interactive",
         ]
         logger.info(f"Running certbot command: {certbot_command}")
 
